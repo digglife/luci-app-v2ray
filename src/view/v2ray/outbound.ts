@@ -586,6 +586,57 @@ return L.view.extend<string[]>({
     o.depends("protocol", "vmess");
     o.datatype = "uinteger";
 
+    // Settings - VLESS
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_address",
+      "%s - %s".format("VLESS", _("Address"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+    o.datatype = "host";
+
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_port",
+      "%s - %s".format("VLESS", _("Port"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+    o.datatype = "port";
+
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_user_id",
+      "%s - %s".format("VLESS", _("User ID"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_user_level",
+      "%s - %s".format("VLESS", _("User level"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+    o.datatype = "uinteger";
+
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_user_encryption",
+      "%s - %s".format("VLESS", _("User Encryption"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+    o.datatype = "string";
+    o.placeholder = "none";
+
     /** Stream Settings **/
     o = s.taboption("stream", form.ListValue, "ss_network", _("Network"));
     o.value("");
