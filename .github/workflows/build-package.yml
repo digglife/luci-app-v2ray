@@ -75,6 +75,8 @@ jobs:
         sudo apt-get install -y ccache gettext libncurses5-dev xsltproc
 
     - name: Create Directories
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       run: |
         CACHE_DIR_SDK="$(eval echo "$CACHE_DIR/sdk")"
         CACHE_DIR_DL="$(eval echo "$CACHE_DIR/dl")"
