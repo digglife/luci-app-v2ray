@@ -434,6 +434,45 @@ return L.view.extend<string[]>({
     o.modalonly = true;
     o.depends("protocol", "vmess");
 
+    // Settings - VLESS
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_client_id",
+      "%s - %s".format("VLESS", _("Client ID"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_client_email",
+      "%s - %s".format("VLESS", _("Client email"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+
+    o = s.taboption(
+      "general",
+      form.Value,
+      "s_vless_client_user_level",
+      "%s - %s".format("VLESS", _("Client User level"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+    o.datatype = "uinteger";
+
+    o = s.taboption(
+      "general",
+      form.Flag,
+      "s_vless_decryption",
+      "%s - %s".format("VLESS", _("Decryption"))
+    );
+    o.modalonly = true;
+    o.depends("protocol", "vless");
+    o.placeholder = "none";
+
     /** Stream Settings  **/
     o = s.taboption("stream", form.ListValue, "ss_network", _("Network"));
     o.value("");
