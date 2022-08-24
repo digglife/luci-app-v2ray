@@ -52,6 +52,7 @@ o:value("mtproto", "MTProto")
 o:value("shadowsocks", "Shadowsocks")
 o:value("socks", "Socks")
 o:value("vmess", "VMess")
+o:value("vless", "VLESS")
 
 -- Settings Blackhole
 o = s:option(ListValue, "s_blackhole_reponse_type", "%s - %s" % { "Blackhole", translate("Response type") } )
@@ -188,6 +189,27 @@ o:value("none", translate("None"))
 o = s:option(Value, "s_vmess_user_level", "%s - %s" % { "VMess", translate("User level") })
 o:depends("protocol", "vmess")
 o.datatype = "uinteger"
+
+-- Settings - VLESS
+o = s:option(Value, "s_vless_address", "%s - %s" % { "VLESS", translate("Address") })
+o:depends("protocol", "vless")
+o.datatype = "host"
+
+o = s:option(Value, "s_vless_port", "%s - %s" % { "VLESS", translate("Port") })
+o:depends("protocol", "vless")
+o.datatype = "port"
+
+o = s:option(Value, "s_vless_user_id", "%s - %s" % { "VLESS", translate("User ID") })
+o:depends("protocol", "vless")
+
+o = s:option(Value, "s_vless_user_level", "%s - %s" % { "VLESS", translate("User level") })
+o:depends("protocol", "vless")
+o.datatype = "uinteger"
+
+o = s:option(Value, "s_vless_user_encryption", "%s - %s" % { "VLESS", translate("User Encryption") })
+o:depends("protocol", "vless")
+o.datatype = "string"
+o.placeholder = "none"
 
 -- Stream Settings
 o = s:option(ListValue, "ss_network", "%s - %s" % { translate("Stream settings"), translate("Network") })

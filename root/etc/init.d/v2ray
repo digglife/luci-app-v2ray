@@ -268,6 +268,11 @@ inbound_section_validate() {
 		's_vmess_default_user_level:uinteger' \
 		's_vmess_detour_to:string' \
 		's_vmess_disable_insecure_encryption:bool:0' \
+		's_vless_address:host' \
+		's_vless_port:port' \
+		's_vless_user_id:string' \
+		's_vless_user_level:uinteger' \
+		's_vless_decryption:string' \
 		'ss_network:or("tcp", "kcp", "ws", "http", "domainsocket", "quic")' \
 		'ss_security:or("none", "tls")' \
 		'ss_tls_server_name:host' \
@@ -347,6 +352,11 @@ outbound_section_validate() {
 		's_vmess_user_alter_id:and(uinteger, max(65535))' \
 		's_vmess_user_security:or("auto", "aes-128-gcm", "chacha20-poly1305", "none")' \
 		's_vmess_user_level:uinteger' \
+		's_vless_address:host' \
+		's_vless_port:port' \
+		's_vless_user_id:string' \
+		's_vless_user_level:uinteger' \
+		's_vless_user_encryption:string' \
 		'ss_network:or("tcp", "kcp", "ws", "http", "domainsocket", "quic")' \
 		'ss_security:or("none", "tls")' \
 		'ss_tls_server_name:host' \
@@ -1206,6 +1216,39 @@ add_inbound_setting() {
 
 			json_close_object # settings
 			;;
+		"vless")
+			json_add_object "settings"
+
+			if [ -n "$s_vless_client_id" ] ; then
+				json_add_array "clients"
+				json_add_object ""
+
+				json_add_string "id" "$s_vless_client_id"
+				test -n "$s_vless_client_email" && \
+					json_add_string "email" "$s_vless_client_email"
+				test -n "$s_vless_client_user_level" && \
+					json_add_int "level" "$s_vless_client_user_level"
+				json_close_object
+				json_close_array # clients
+			fi
+
+			json_add_string "decryption" "$s_vless_decryption"
+
+			if [ -n "$s_vless_fallbacks_dest" ]; then
+				json_add_array "fallbacks"
+				json_add_object ""
+
+				json_add_string "alph" "$s_vless_fallbacks_alph"
+				json_add_string "path" "$s_vless_fallbacks_path"
+				json_add_int "dest" "$s_vless_fallbacks_dest"
+				json_add_int "xver" "$s_vless_fallbacks_xver"
+
+				json_close_object
+				json_close_array # fallbacks
+			fi
+
+			json_close_object # settings
+			;;
 	esac
 
 	json_add_object "streamSettings"
@@ -1628,6 +1671,31 @@ add_outbound_setting() {
 				json_add_string "security" "$s_vmess_user_security"
 			test -n "$s_vmess_user_level" && \
 				json_add_int "level" "$s_vmess_user_level"
+			json_close_object
+			json_close_array # users
+
+			json_close_object
+
+			json_close_array # vnext
+			json_close_object # settings
+			;;
+		"vless")
+			json_add_object "settings"
+
+			json_add_array "vnext"
+			json_add_object ""
+
+			json_add_string "address" "$s_vless_address"
+			append_server_address "$s_vless_address"
+
+			json_add_int "port" "$s_vless_port"
+
+			json_add_array "users"
+			json_add_object ""
+			json_add_string "id" "$s_vless_user_id"
+			json_add_string "encryption" "$s_vless_user_encryption"
+			test -n "$s_vless_user_level" && \
+				json_add_int "level" "$s_vless_user_level"
 			json_close_object
 			json_close_array # users
 

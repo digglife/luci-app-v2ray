@@ -54,6 +54,7 @@ o:value("mtproto", "MTProto")
 o:value("shadowsocks", "Shadowsocks")
 o:value("socks", "Socks")
 o:value("vmess", "VMess")
+o:value("vless", "VLESS")
 
 -- Settings - Dokodemo-door
 o = s:option(Value, "s_dokodemo_door_address", "%s - %s" % { "Dokodemo-door", translate("Address") },
@@ -217,6 +218,41 @@ o:depends("protocol", "vmess")
 
 o = s:option(Flag, "s_vmess_disable_insecure_encryption", "%s - %s" % { "VMess", translate("Disable insecure encryption") })
 o:depends("protocol", "vmess")
+
+-- Settings - VLESS
+o = s:option(Value, "s_vless_client_id", "%s - %s" % { "VLESS", translate("Client ID") })
+o:depends("protocol", "vless")
+
+o = s:option(Value, "s_vless_client_email", "%s - %s" % { "VLESS", translate("Client email") })
+o:depends("protocol", "vless")
+
+o = s:option(Value, "s_vless_client_user_level", "%s - %s" % { "VLESS", translate("Client User level") })
+o:depends("protocol", "vless")
+o.datatype = "uinteger"
+
+o = s:option(Value, "s_vless_decryption", "%s - %s" % { "VLESS", translate("Decryption") })
+o:depends("protocol", "vless")
+o.datatype = "string"
+o.default = "none"
+
+o = s:option(Value, "s_vless_fallbacks_alph", "%s - %s" % { "Fallbacks", translate("alph") })
+o:depends("protocol", "vless")
+o.datatype = "string"
+
+o = s:option(Value, "s_vless_fallbacks_path", "%s - %s" % { "Fallbacks", translate("path") })
+o:depends("protocol", "vless")
+o.datatype = "string"
+
+o = s:option(Value, "s_vless_fallbacks_dest", "%s - %s" % { "Fallbacks", translate("destination") })
+o:depends("protocol", "vless")
+o.datatype = "string"
+
+o = s:option(ListValue, "s_vless_fallbacks_xver", "%s - %s" % { "Fallbacks", translate("xver") })
+o:depends("protocol", "vless")
+o:value("")
+o:value("0")
+o:value("1")
+o:value("2")
 
 -- Stream Settings
 o = s:option(ListValue, "ss_network", "%s - %s" % { translate("Stream settings"), translate("Network") })
