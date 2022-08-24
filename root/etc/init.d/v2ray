@@ -1636,6 +1636,31 @@ add_outbound_setting() {
 			json_close_array # vnext
 			json_close_object # settings
 			;;
+		"vless")
+			json_add_object "settings"
+
+			json_add_array "vnext"
+			json_add_object ""
+
+			json_add_string "address" "$s_vless_address"
+			append_server_address "$s_vless_address"
+
+			json_add_int "port" "$s_vless_port"
+
+			json_add_array "users"
+			json_add_object ""
+			json_add_string "id" "$s_vless_user_id"
+			json_add_string "encryption" "$s_vless_user_encryption"
+			test -n "$s_vless_user_level" && \
+				json_add_int "level" "$s_vless_user_level"
+			json_close_object
+			json_close_array # users
+
+			json_close_object
+
+			json_close_array # vnext
+			json_close_object # settings
+			;;
 	esac
 
 	json_add_object "streamSettings"
